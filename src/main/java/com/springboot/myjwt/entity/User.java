@@ -25,7 +25,7 @@ public class User implements UserDetails {
     private Integer id;
 
     @Column(nullable = false)
-    private String username;
+    private String fullName;
 
     @Column(nullable = false, length = 100, unique = true)
     private String email;
@@ -49,8 +49,8 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getEmail() {
@@ -97,7 +97,7 @@ public class User implements UserDetails {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
+                ", fullName='" + fullName + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", createdAt=" + createdAt +
