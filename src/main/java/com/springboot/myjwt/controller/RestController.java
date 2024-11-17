@@ -1,4 +1,4 @@
-package com.springboot.jwt.controller;
+package com.springboot.myjwt.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 
