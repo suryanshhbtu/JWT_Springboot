@@ -3,12 +3,21 @@ package com.springboot.myjwt.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
+/*
+ * Spring Security provides an interface named
+ * “UserDetails” with properties and methods
+ * that the User entity must override the implementation.
+ * */
 @Entity
-@Table(name="user")
-public class User {
+@Table(name = "user")
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,11 +34,11 @@ public class User {
     private String password;
 
     @CreatedDate
-    @Column(name="created_at", updatable = false)
+    @Column(name = "created_at", updatable = false)
     private Date createdAt;
 
     @UpdateTimestamp
-    @Column(name="updated_at")
+    @Column(name = "updated_at")
     private Date updatedAt;
 
     public Integer getId() {
@@ -62,5 +71,47 @@ public class User {
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
+    }
+
+//    Returns a role list, helpful in managing permissions
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    /*
+    * Make sure the method isAccountNonExpired(), isAccountNonLocked(),
+    * isCredentialsNonExpired(), and isEnabled() returns “true”;
+    * otherwise, the authentication will fail.
+    * You can customize the logic of these methods to fit your needs.
+    * */
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
